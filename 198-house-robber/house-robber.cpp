@@ -15,10 +15,6 @@ public:
                     ans[i][k] |= ans[i - 2][k - nums[i - 1]];
                 }
 
-                if(nums[i - 1] <= k && i >= 3) {
-                    ans[i][k] |= ans[i - 3][k - nums[i - 1]];
-                }
-
                 if(ans[i][k]) {
                     robbed = max(robbed, k);
                 }
