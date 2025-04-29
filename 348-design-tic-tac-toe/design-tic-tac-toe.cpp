@@ -28,8 +28,6 @@ public:
     int move(int row, int col, int player) {
         updateValues(row, col, (player == 1) ? 1 : -1);
 
-        cout << dia2 << endl;
-
         if(checkWinner(row, col)) {
             return player;
         }
