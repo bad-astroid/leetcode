@@ -5,7 +5,7 @@ public:
         return word;
     }
     int longestPalindrome(vector<string>& words) {
-        unordered_map<string, int> fr, visited;
+        map<string, int> fr, visited;
         for (auto word : words) {
             fr[word]++;
         }
