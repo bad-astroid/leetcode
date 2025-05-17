@@ -31,7 +31,7 @@ public:
             }
         }
 
-        map<int, vector<string>> mp;
+        unordered_map<int, vector<string>> mp;
         for(int j = 0; j < accounts.size(); ++j) {
             auto &account = accounts[j];
             int setId = findp(j);
