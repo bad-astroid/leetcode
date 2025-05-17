@@ -15,7 +15,7 @@ public:
     }
     vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
         vector<vector<string>> ret;
-        map<string, int> accountId;
+        unordered_map<string, int> accountId;
         par.assign(accounts.size(), 0);
         for(int j = 0; j < accounts.size(); ++j) {
             par[j] = j;
