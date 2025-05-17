@@ -10,10 +10,9 @@ public:
             players[playerId] = score;
             return;
         }
-
-        auto scoreIt = scores.find(players[playerId]);
-        int newScore = *scoreIt + score;
-        scores.erase(scoreIt);
+        
+        int newScore = players[playerId] + score;
+        reset(playerId);
         scores.insert(newScore);
         players[playerId] = newScore;
     }
@@ -25,7 +24,7 @@ public:
             ret += *rit;
             rit++;
         }
-
+    
         return ret;
     }
     
