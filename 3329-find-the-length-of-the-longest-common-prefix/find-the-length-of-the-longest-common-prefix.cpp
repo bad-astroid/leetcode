@@ -12,8 +12,8 @@ public:
         int ret = 0;
         for(auto a : arr2) {
             while(a) {
-                if(prefixExists[a] == true) {
-                    ret = max(ret, static_cast<int>(log10(a) + 1));
+                if(prefixExists.count(a)) {
+                    ret = max(ret, ((int)log10(a) + 1));
                 }
 
                 a /= 10;
