@@ -12,10 +12,10 @@
 class Solution {
 public:
     int k;
-    map<int, int> closestLeaf;
-    map<int, int> dist;
-    map<int, int> depth;
-    map<int, bool> isAncestor;
+    unordered_map<int, int> closestLeaf;
+    unordered_map<int, int> dist;
+    unordered_map<int, int> depth;
+    unordered_map<int, bool> isAncestor;
     void dfs(TreeNode* u) {
         if(u->left == nullptr && u->right == nullptr) {
             closestLeaf[u->val] = u->val;
