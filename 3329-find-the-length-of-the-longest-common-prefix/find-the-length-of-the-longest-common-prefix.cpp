@@ -12,7 +12,7 @@ public:
         int ret = 0;
         for(auto a : arr2) {
             while(a) {
-                if(prefixExists.count(a)) {
+                if(prefixExists.contains(a)) {
                     ret = max(ret, ((int)log10(a) + 1));
                 }
 
