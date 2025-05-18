@@ -12,23 +12,21 @@
 class Solution {
 public:
     int k;
-    unordered_map<int, int> closestLeaf;
-    unordered_map<int, int> dist;
+    unordered_map<int, pair<int,int>> closestLeaf;
     unordered_map<int, int> depth;
     unordered_map<int, bool> isAncestor;
     void dfs(TreeNode* u) {
         if(u->left == nullptr && u->right == nullptr) {
-            closestLeaf[u->val] = u->val;
-            dist[u->val] = 0;
+            closestLeaf[u->val] = make_pair(0, u->val);
             return;
         }
-        dist[u->val] = INT_MAX;
+
+        closestLeaf[u->val] = make_pair(INT_MAX, INT_MAX);
     
         if(u->left != nullptr) {
             depth[u->left->val] = 1 + depth[u->val];
             dfs(u->left);
-            dist[u->val] = 1 + dist[u->left->val];
-            closestLeaf[u->val] = closestLeaf[u->left->val];
+            closestLeaf[u->val] = make_pair(closestLeaf[u->left->val].first + 1, closestLeaf[u->left->val].second);
             isAncestor[u->val] |= isAncestor[u->left->val];
         }
         
@@ -36,17 +34,12 @@ public:
             depth[u->right->val] = 1 + depth[u->val];
             dfs(u->right);
             isAncestor[u->val] |= isAncestor[u->right->val];
-            if(1 + dist[u->right->val] < dist[u->val]) {
-                dist[u->val] = 1 + dist[u->right->val];
-                closestLeaf[u->val] = closestLeaf[u->right->val];
-            }
+            closestLeaf[u->val] = min(closestLeaf[u->val], make_pair(closestLeaf[u->right->val].first + 1, closestLeaf[u->right->val].second));
         }
     }
 
     pair<int,int> findAns(TreeNode* u) {
-        auto ret = make_pair(depth[k] - depth[u->val] + dist[u->val], closestLeaf[u->val]);
-
-        // cout << depth[k] - depth[u->val] + dist[u->val] << endl;
+        auto ret = make_pair(depth[k] - depth[u->val] + closestLeaf[u->val].first, closestLeaf[u->val].second);
         
         if(u->left != nullptr && isAncestor[u->left->val]) {
             ret = min(ret, findAns(u->left));
