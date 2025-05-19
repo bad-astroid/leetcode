@@ -1,7 +1,7 @@
 class Solution {
 public:
     struct Node{
-        vector<Node*> nxt = vector<Node*>(10, nullptr);
+       Node* nxt[10] = {} ;
     };
     Node* root = new Node() ;
     void insert(string s) {
