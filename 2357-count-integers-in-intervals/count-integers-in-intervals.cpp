@@ -9,11 +9,11 @@ public:
         if(p2 < p1) swap(p1, p2);
         return p1.second >= p2.first;
     }
-    pair<int,int> merge(pair<int,int> p1, pair<int,int> p2) {
-        // cout << p2.first << ' ' << p2.second << endl;
+    pair<int,int> merge(pair<int,int> p1, set<pair<int,int>>::iterator it) {
+        pair<int,int> p2 = *it;
         if(canMerge(p1, p2)) {
             cnt -= p2.second - p2.first + 1;
-            segments.erase(segments.find(p2));
+            segments.erase(it);
             p1.first = min(p1.first, p2.first);
             p1.second = max(p1.second, p2.second);
         }
@@ -28,7 +28,7 @@ public:
 
         while(it != segments.end()) {
             if(it->first > right) break;
-            auto res = merge(make_pair(left,right), *it);
+            auto res = merge(make_pair(left,right), it);
             left = res.first;
             right = res.second;
             it++;
