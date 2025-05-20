@@ -10,8 +10,13 @@ public:
         }
         int cnt = 0;
         for(int i = 0; i < (int)p.size(); ++i) {
-            if(++sFr[s[i] - 'a'] == pFr[s[i] - 'a']) {
+            ++sFr[s[i] - 'a'];
+            if(sFr[s[i] - 'a'] == pFr[s[i] - 'a']) {
                 cnt += pFr[s[i] - 'a'];
+            }
+
+            if(sFr[s[i] - 'a'] == pFr[s[i] - 'a'] + 1) {
+                cnt -= pFr[s[i] - 'a'];
             }
         }
 
@@ -20,15 +25,24 @@ public:
         }
 
         for(int r = (int)p.size(), l = 0; r < s.size(); ++r){
-            if(--sFr[s[l] - 'a'] == pFr[s[l] - 'a'] - 1) {
+            --sFr[s[l] - 'a'];
+            if(sFr[s[l] - 'a'] == pFr[s[l] - 'a']) {
+                cnt +=  pFr[s[l] - 'a'];
+            }
+            if(sFr[s[l] - 'a'] == pFr[s[l] - 'a'] - 1) {
                 cnt -=  pFr[s[l] - 'a'];
             }
             ++l;
 
-            if(++sFr[s[r] - 'a'] == pFr[s[r] - 'a']) {
+            ++sFr[s[r] - 'a'];
+            if(sFr[s[r] - 'a'] == pFr[s[r] - 'a']) {
                 cnt += pFr[s[r] - 'a'];
             }
-
+            if(sFr[s[r] - 'a'] == pFr[s[r] - 'a'] + 1) {
+                cnt -= pFr[s[r] - 'a'];
+            }
+            
+            // cout << l << ' ' << cnt << endl;
             if(cnt == p.size()) {
                 ret.push_back(l);
             }
