@@ -48,7 +48,7 @@ public:
         for(auto it : mp) {
             auto account = it.second;
             sort(account.begin() + 1, account.end());
-            account.erase(unique(account.begin(), account.end()), account.end());
+            account.erase(unique(account.begin() + 1, account.end()), account.end());
             ret.push_back(account);
         }
 
