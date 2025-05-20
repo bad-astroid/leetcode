@@ -1,7 +1,6 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        cout << s.size() << ' ' << p.size() << endl;
         if(p.size() > s.size()) {
             return vector<int>(0);
         }
@@ -30,7 +29,6 @@ public:
                 cnt += pFr[s[r] - 'a'];
             }
 
-            cout << l << ' ' << cnt << endl;
             if(cnt == p.size()) {
                 ret.push_back(l);
             }
