@@ -28,7 +28,6 @@ public:
                 hi = mid - 1;
             }
         }
-        cout << j << endl;
         return j;
     }
     int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
@@ -38,15 +37,10 @@ public:
             jobs.push_back(Job(startTime[i], endTime[i], profit[i]));
         }
         sort(jobs.begin(), jobs.end());
-        // for(auto job : jobs) {
-        //     cout << job.start << ' ' << job.finish << ' ' << job.val << endl;
-        // }
-        // cout << endl;
 
         vector<int> ans(n+1);
         for(int i = 1; i <= n; ++i) {
             int j = findEarliestJob(jobs, i);
-            // cout << i << ' ' << jobs[i].start << ' ' << jobs[i].finish << " --- " << jobs[j].start << ' ' << jobs[j].finish << endl;
             ans[i] = max(ans[i-1], ans[j] + jobs[i].val);
         }
         return ans[n];
