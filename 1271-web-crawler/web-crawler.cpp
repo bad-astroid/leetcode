@@ -9,7 +9,7 @@
 
 class Solution {
 public:
-    unordered_map<string, bool> visited;
+    unordered_set<string> visited;
     string findHostName(string url) {
         string ret = "";
         for(int i = 7; i < url.size(); ++i) {
@@ -19,9 +19,9 @@ public:
         return ret;
     }
     void dfs(string url, string hostName, vector<string>& ret, HtmlParser& htmlParser) {
-        if(visited[url]) return;
+        if(visited.contains(url)) return;
         if(findHostName(url) != hostName) return;
-        visited[url] = true;
+        visited.insert(url);
         ret.push_back(url);
         for(auto nextUrl : htmlParser.getUrls(url)) {
             dfs(nextUrl, hostName, ret, htmlParser);
