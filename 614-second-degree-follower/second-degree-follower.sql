@@ -1,9 +1,9 @@
 # Write your MySQL query statement below
 select
-    f1.followee as follower,
-    count(DISTINCT f1.follower) as num
+    f2.followee as follower,
+    count(DISTINCT f2.follower) as num
 from Follow f1
 join Follow f2
-on f1.followee = f2.follower
-group by f1.followee
-order by f1.followee
+on f1.follower = f2.followee
+group by f2.followee
+order by f2.followee;
