@@ -1,12 +1,7 @@
 class Solution {
 public:
-    bool static compare(vector<int>& v1, vector<int> &v2) {
-        auto p1 = make_pair(v1[0], v1[1]);
-        auto p2 = make_pair(v2[0], v2[1]);
-        return p1 < p2;
-    }
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        sort(intervals.begin(), intervals.end(), compare);
+        sort(intervals.begin(), intervals.end());
         vector<vector<int>> ans;
         int left = intervals[0][0], right = intervals[0][1];
         for(auto interval : intervals) {
