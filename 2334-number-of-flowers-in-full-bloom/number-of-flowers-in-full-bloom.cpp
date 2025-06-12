@@ -12,7 +12,7 @@ public:
             int startBeforeCount = upper_bound(starts.begin(), starts.end(), person) - starts.begin();
             int endBeforeCount = lower_bound(ends.begin(), ends.end(), person) - ends.begin();
             ret.push_back(startBeforeCount - endBeforeCount);
-            cout << person << ' ' << startBeforeCount << ' ' << endBeforeCount << endl;
+            // cout << person << ' ' << startBeforeCount << ' ' << endBeforeCount << endl;
         }
         return ret;
     }
