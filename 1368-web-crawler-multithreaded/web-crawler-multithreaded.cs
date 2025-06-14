@@ -11,9 +11,9 @@ class Solution {
     ConcurrentDictionary<string, byte> visited;
     string rootHost;
     List<string> result;
-    private Task dfsAsync(string currentUrl, HtmlParser htmlParser) {
+    private void dfsAsync(string currentUrl, HtmlParser htmlParser) {
         if(!visited.TryAdd(currentUrl, 0)) {
-            return Task.CompletedTask;
+            return;
         }
         result.Add(currentUrl);
         var tasks = new List<Task>();
@@ -24,13 +24,12 @@ class Solution {
             tasks.Add(Task.Factory.StartNew(() => dfsAsync(nextUrl, htmlParser)));
         }
         Task.WaitAll(tasks.ToArray());
-        return Task.CompletedTask;
     }
     public IList<string> Crawl(string startUrl, HtmlParser htmlParser) {
         rootHost = (new Uri(startUrl)).Host;
         result = new List<string>();
         visited = new ConcurrentDictionary<string, byte>();
-        dfsAsync(startUrl, htmlParser).Wait();
+        dfsAsync(startUrl, htmlParser);
         return result;
     }
 }
