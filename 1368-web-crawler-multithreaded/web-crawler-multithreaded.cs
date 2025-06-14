@@ -1,24 +1,36 @@
+/**
+ * // This is the HtmlParser's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class HtmlParser {
+ *     public List<String> GetUrls(String url) {}
+ * }
+ */
 using System.Threading.Tasks;
-
+using System.Collections.Concurrent;
 class Solution {
-    public IList<string> Crawl(string startUrl, HtmlParser htmlParser) {
-        HashSet<string> visited = new HashSet<string> { startUrl };
-        string host = (new Uri(startUrl)).Host;
-        void Process(string url) {
-            Task[] tasks = htmlParser.GetUrls(url).Where(x => (new Uri(x)).Host == host).Select(x =>
-                Task.Factory.StartNew(() => {
-                    string str = (string)x;
-                    lock(visited) {
-                        if(visited.Contains(str)) {
-                            return;
-                        }
-                        visited.Add(str);
-                    } 
-                    Process(str);
-                })).ToArray();
-            Task.WaitAll(tasks);
+    ConcurrentDictionary<string, byte> visited;
+    string rootHost;
+    List<string> result;
+    private Task dfsAsync(string currentUrl, HtmlParser htmlParser) {
+        if(!visited.TryAdd(currentUrl, 0)) {
+            return Task.CompletedTask;
         }
-        Process(startUrl);
-        return visited.ToList();
+        result.Add(currentUrl);
+        var tasks = new List<Task>();
+        foreach(var nextUrl in htmlParser.GetUrls(currentUrl)) {
+            if(rootHost != (new Uri(nextUrl).Host)) {
+                continue;
+            }
+            tasks.Add(Task.Factory.StartNew(() => dfsAsync(nextUrl, htmlParser)));
+        }
+        Task.WaitAll(tasks.ToArray());
+        return Task.CompletedTask;
+    }
+    public IList<string> Crawl(string startUrl, HtmlParser htmlParser) {
+        rootHost = (new Uri(startUrl)).Host;
+        result = new List<string>();
+        visited = new ConcurrentDictionary<string, byte>();
+        dfsAsync(startUrl, htmlParser).Wait();
+        return result;
     }
 }
