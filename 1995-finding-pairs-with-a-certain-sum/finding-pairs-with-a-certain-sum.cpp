@@ -1,6 +1,6 @@
 class FindSumPairs {
 public:
-    map<int,int> freq;
+    unordered_map<int,int> freq;
     vector<int> nums1, nums2;
     FindSumPairs(vector<int>& _nums1, vector<int>& _nums2) {
         nums1 = _nums1;
@@ -20,7 +20,7 @@ public:
         int ans = 0;
         for(auto num : nums1) {
             int rem = tot - num;
-            ans += freq[rem];
+            if(freq.contains(rem)) ans += freq[rem];
         }
 
         return ans;
