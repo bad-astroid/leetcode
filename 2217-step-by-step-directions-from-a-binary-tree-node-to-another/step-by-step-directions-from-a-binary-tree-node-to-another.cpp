@@ -40,9 +40,6 @@ public:
         reverse(pathToStart.begin(), pathToStart.end());
         reverse(pathToDest.begin(), pathToDest.end());
 
-        // for(auto u : pathToDest) {
-        //     cout << u->val << endl;
-        // }
         int lca = 0;
         for(int i = 0; i < min((int)pathToDest.size(), (int)pathToStart.size()); ++i) {
             if(pathToDest[i]->val != pathToStart[i]->val) break;
@@ -53,7 +50,7 @@ public:
         }
 
         for(int i = lca+1; i < pathToDest.size(); ++i) {
-            if(pathToDest[i-1]->left == pathToDest[i]) ret += 'L';
+            if(pathToDest[i-1]->left != nullptr && pathToDest[i-1]->left->val == pathToDest[i]->val) ret += 'L';
             else ret += 'R';
         }
         
