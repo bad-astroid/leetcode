@@ -1,34 +1,31 @@
 class Solution {
 public:
     vector<int> smallestRange(vector<vector<int>>& nums) {
-        vector<pair<int,int>> allNums;
-        for (int i = 0; i < nums.size(); ++i) {
-            for(auto num : nums[i]) {
-                allNums.push_back(make_pair(num, i));
+        vector<int> ret = {(int)-1e6, (int)1e6};
+        vector<pair<int, int>> v;
+        for(int i = 0; i < nums.size(); ++i) {
+            for(int j = 0; j < nums[i].size(); ++j) {
+                v.push_back({nums[i][j], i});
             }
         }
 
-        sort(allNums.begin(), allNums.end());
+        sort(v.begin(), v.end());
+        vector<int> fr(nums.size());
+        int listCnt = 0;
+        for(int r = 0, l = 0; r < v.size(); ++r) {
+            if(++fr[v[r].second] == 1) listCnt++;
 
-        int l = 0, ansL = -1e5 - 1, ansR = 1e5 + 1, cnt = 0;
-        vector<int> fr(nums.size(), 0);
-        for(int r = 0; r < allNums.size(); ++r) {
-            if(++fr[allNums[r].second] == 1) {
-                cnt++;
-            }
-
-            while(cnt == nums.size()) {
-                if(allNums[r].first - allNums[l].first < ansR - ansL) {
-                    ansR = allNums[r].first;
-                    ansL = allNums[l].first;
+            while(listCnt == nums.size()) {
+                if(v[r].first - v[l].first < ret[1] - ret[0]) {
+                    ret[1] = v[r].first;
+                    ret[0] = v[l].first;
                 }
 
-                if(--fr[allNums[l++].second] == 0) {
-                    cnt--;
-                }
+                if (--fr[v[l++].second] == 0) listCnt--;
             }
+            
         }
 
-        return {ansL, ansR};
+        return ret;
     }
 };
