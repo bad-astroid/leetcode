@@ -8,21 +8,20 @@ public:
     void addNum(int value) {
         pair<int,int> interval = make_pair(value, value);
         auto it = mp.upper_bound(value);
+
+        if(it != mp.end() && it->first - 1 == value) {
+            interval.second = it->second;
+            it = mp.erase(it);
+        }
+
         if(it != mp.begin()) {
             it--;
             if(value <= it->second) return;
 
             if(value == it->second + 1) {
                 interval.first = it->first;
-                it = mp.erase(it);
+                mp.erase(it);
             }
-
-        }
-
-        it = mp.upper_bound(value);
-        if(it != mp.end() && it->first - 1 == value) {
-            interval.second = it->second;
-            mp.erase(it);
         }
 
         mp[interval.first] = interval.second;
