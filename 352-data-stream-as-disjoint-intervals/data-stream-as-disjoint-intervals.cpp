@@ -1,43 +1,38 @@
 class SummaryRanges {
 public:
-    set<pair<int,int>> ranges;
+    map<int,int> mp;
     SummaryRanges() {
-        ranges.insert(make_pair(-2, -2));
+
     }
-    
+
     void addNum(int value) {
-        auto range = make_pair(value, value);
-        auto it = ranges.upper_bound(range);
-        if(it != ranges.end() && value >= it->first && value <= it->second) {
-            return;
-        }
-        it--;
-        if(value >= it->first && value <= it->second) {
-            return;
-        }
-        
-        if(it->second == value - 1) {
-            range.first = it->first;
-            it = ranges.erase(it);
-        }
-        else{
-            it++;
+        pair<int,int> interval = make_pair(value, value);
+        auto it = mp.upper_bound(value);
+        if(it != mp.begin()) {
+            it--;
+            if(value <= it->second) return;
+
+            if(value == it->second + 1) {
+                interval.first = it->first;
+                it = mp.erase(it);
+            }
+
         }
 
-        if(it != ranges.end() && it->first == value + 1) {
-            range.second = it->second;
-            ranges.erase(it);
+        it = mp.upper_bound(value);
+        if(it != mp.end() && it->first - 1 == value) {
+            interval.second = it->second;
+            mp.erase(it);
         }
 
-        ranges.insert(range);
+        mp[interval.first] = interval.second;
     }
-    
+
     vector<vector<int>> getIntervals() {
         vector<vector<int>> ret;
-        for(auto it = next(ranges.begin()); it != ranges.end(); it++) {
-            ret.push_back({it->first, it->second});
+        for(auto x : mp) {
+            ret.push_back({x.first, x.second});
         }
-
         return ret;
     }
 };
