@@ -1,20 +1,20 @@
 class Solution {
 public:
-    struct Node{
-       Node* nxt[10] = {} ;
+    struct Node {
+        Node* nxt[10] = {};
     };
-    Node* root = new Node() ;
-    void insert(string s) {
+    Node* root = new Node();
+    void add(string s) {
         Node* u = root;
         for(int i = 0; i < s.size(); ++i) {
             if(u->nxt[s[i] - '0'] == nullptr) {
                 u->nxt[s[i] - '0'] = new Node();
             }
-
             u = u->nxt[s[i] - '0'];
         }
     }
-    int find(string s) {
+
+    int findLcp(string s) {
         Node* u = root;
         for(int i = 0; i < s.size(); ++i) {
             if(u->nxt[s[i] - '0'] == nullptr) {
@@ -25,17 +25,17 @@ public:
 
         return s.size();
     }
+
     int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
-        for(auto a : arr1) {
-            insert(to_string(a));
+        int res = 0;
+        for(auto x : arr1) {
+            add(to_string(x));
         }
 
-        int ret = 0;
-        for(auto a : arr2) {
-            string s = to_string(a);
-            ret = max(ret, find(s));
-        }  
+        for(auto x : arr2) {
+            res = max(res, findLcp(to_string(x)));
+        }
 
-        return ret;      
+        return res;
     }
 };
