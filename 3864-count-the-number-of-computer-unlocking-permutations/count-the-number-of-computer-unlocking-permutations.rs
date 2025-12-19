@@ -9,7 +9,7 @@ impl Solution {
         }
 
         let mut ret: i64 = 1;
-        let mod_val: i64 = 1000000007;
+        let mod_val = 1000000007;
         for i in 2..n {
             ret = (ret * i as i64) % mod_val;
         }
