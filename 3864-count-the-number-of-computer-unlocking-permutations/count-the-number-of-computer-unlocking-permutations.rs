@@ -1,16 +1,20 @@
 impl Solution {
     const M: i64 = 1_000_000_007;
-    pub fn mult(a: i64, b: i64) -> i32 {
-        return ((a * b) % Self::M) as i32;
-    }
+
     pub fn count_permutations(complexity: Vec<i32>) -> i32 {
-        let mut ret = 1;
-        for (i, &c) in complexity.iter().enumerate() {
-            if i == 0 { continue; }
-            ret = Self::mult(i as i64, ret as i64);
-            if c <= complexity[0] { return 0; }
+        let mut ret: i64 = 1;
+        let n = complexity.len();
+
+        for i in 1..n {
+            if complexity[0] >= complexity[i] {
+                return 0;
+            }
         }
 
-        return ret;
+        for i in 1..n {
+            ret = (ret * i as i64) % Self::M;
+        }
+
+        return ret as i32;
     }
 }
