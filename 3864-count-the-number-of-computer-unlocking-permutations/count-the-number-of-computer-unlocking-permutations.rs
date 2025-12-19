@@ -1,7 +1,7 @@
 impl Solution {
     const M: i64 = 1_000_000_007;
     pub fn mult(a: i64, b: i64) -> i32 {
-        return (((a % Self::M) * (b % Self::M)) % Self::M) as i32;
+        return ((a * b) % Self::M) as i32;
     }
     pub fn count_permutations(complexity: Vec<i32>) -> i32 {
         let mut ret = 1;
@@ -11,6 +11,6 @@ impl Solution {
             if c <= complexity[0] { return 0; }
         }
 
-    return ret;
+        return ret;
     }
 }
